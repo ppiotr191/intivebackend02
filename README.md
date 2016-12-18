@@ -2,21 +2,35 @@
 
 Test task for intive
 
+Running application : 
+```
+./mvnw spring-boot:run
+```
+
 Rest api usage :
 
 # Actors
 
 1) Get All actors : 
+```
 	curl http://localhost:8080/actors
+```
 2) Get actor : 
+```
 	curl http://localhost:8080/actors/1
+```
 3) Add actor :
+```
 	curl -i -X POST -H "Content-Type:application/json" -d '{  "firstName" : "Johnny",  "lastName" : "Depp" }' http://localhost:8080/actors
+```
 4) Edit Actor
+```
 	curl -X PUT -H "Content-Type:application/json" -d '{ "firstName": "Johnny", "lastName": "Cage" }' http://localhost:8080/actors/1
+```
 5) Delete Actor
+```
 	curl -X DELETE http://localhost:8080/actors/1
-	
+```	
 
 # Movies
 
