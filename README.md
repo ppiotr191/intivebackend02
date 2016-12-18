@@ -54,7 +54,7 @@ Rest api usage :
 ```
 	curl -X DELETE http://localhost:8080/movies/1
 ```
-6) Add actor to movie
+6) Assign actor to movie
 ```
 	curl -X POST http://localhost:8080/movies/1/add_actor/1
 ```	
