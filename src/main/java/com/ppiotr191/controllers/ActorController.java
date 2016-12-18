@@ -12,26 +12,30 @@ import java.util.Set;
 @RestController
 public class ActorController{
 
+
+    @Autowired
+    private CrudRepository<Movie,Long> movieRepository;
+
     @Autowired
     private CrudRepository<Actor,Long> actorRepository;
 
-    @RequestMapping(value = "/actor", method = RequestMethod.GET)
+    @RequestMapping(value = "/actors", method = RequestMethod.GET)
     public Iterable<Actor> index()
     {
         return actorRepository.findAll();
     }
 
-    @RequestMapping(value = "/actor/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/actors/{id}", method = RequestMethod.GET)
     public Actor get(@PathVariable("id") long id)
     {
         return actorRepository.findOne(id);
     }
-    @RequestMapping(value = "/actor", method = RequestMethod.POST)
+    @RequestMapping(value = "/actors", method = RequestMethod.POST)
     public Actor create(@RequestBody Actor actor) {
         return actorRepository.save(actor);
     }
 
-    @RequestMapping(value = "/actor/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/actors/{id}", method = RequestMethod.PUT)
     public Actor update(@PathVariable("id") long id, @RequestBody Actor actor) {
         Actor update = actorRepository.findOne(id);
         update.setFirstName(actor.getFirstName());
@@ -40,8 +44,22 @@ public class ActorController{
         return actorRepository.save(update);
     }
 
-    @RequestMapping(value = "/actor{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/actors/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") long id) {
+        /*
+        Actor actor = actorRepository.findOne(id);
+        Set<Movie> movies = actor.getMovies();
+        for (Movie movie : movies)
+        {
+            Set<Actor> actors = movie.getActors();
+            actors.remove(actor);
+            movie.setActors(actors);
+            movieRepository.save(movie);
+        }
+        movies.clear();
+        actor.setMovies(movies);
+        actorRepository.save(actor);
+        */
         actorRepository.delete(id);
     }
 

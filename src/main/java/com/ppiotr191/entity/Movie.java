@@ -1,9 +1,8 @@
 package com.ppiotr191.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -17,7 +16,9 @@ public class Movie {
     private long id;
     private String name;
     private String type;
-    //private Set<Actor> actors;
+
+    @ManyToMany(mappedBy = "movies")
+    private Set<Actor> actors;
 
     protected Movie(){}
 
@@ -44,13 +45,14 @@ public class Movie {
         this.type = type;
     }
 
-    //public Set<Actor> getActors() {
-     //   return actors;
-    //}
 
-    //public void setActors(Set<Actor> actors) {
-    //    this.actors = actors;
-    //}
+    public Set<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<Actor> actors) {
+        this.actors = actors;
+    }
 
     public long getId() {
         return id;
@@ -58,5 +60,15 @@ public class Movie {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", actors=" + actors +
+                '}';
     }
 }

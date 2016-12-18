@@ -4,10 +4,13 @@ package com.ppiotr191.entity;
  * Created by pablo27 on 14.12.16.
  */
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Actor {
@@ -18,14 +21,24 @@ public class Actor {
     private String firstName;
     private String lastName;
 
-    protected Actor() {}
 
+    @ManyToMany(cascade =CascadeType.ALL)
+    @JsonBackReference
+    private Set<Movie> movies;
+
+
+    protected Actor() {}
+    public Actor(String firstName, String lastName) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -45,4 +58,21 @@ public class Actor {
         this.lastName = lastName;
     }
 
+    public Set<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
+    }
+
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", movies=" + movies +
+                '}';
+    }
 }
