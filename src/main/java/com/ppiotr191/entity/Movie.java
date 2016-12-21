@@ -17,7 +17,7 @@ public class Movie {
     private String name;
     private String type;
 
-    @ManyToMany(mappedBy = "movies")
+    @ManyToMany
     private Set<Actor> actors;
 
     protected Movie(){}

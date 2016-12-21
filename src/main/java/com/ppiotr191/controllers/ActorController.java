@@ -2,6 +2,7 @@ package com.ppiotr191.controllers;
 
 import com.ppiotr191.entity.Actor;
 import com.ppiotr191.entity.Movie;
+import com.ppiotr191.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +27,12 @@ public class ActorController{
     }
 
     @RequestMapping(value = "/actors/{id}", method = RequestMethod.GET)
-    public Actor get(@PathVariable("id") long id)
-    {
-        return actorRepository.findOne(id);
+    public Actor get(@PathVariable("id") long id) throws NotFoundException {
+        Actor actor = actorRepository.findOne(id);
+        if (actor != null){
+            return actorRepository.findOne(id);
+        }
+        throw new NotFoundException();
     }
     @RequestMapping(value = "/actors", method = RequestMethod.POST)
     public Actor create(@RequestBody Actor actor) {
@@ -36,31 +40,37 @@ public class ActorController{
     }
 
     @RequestMapping(value = "/actors/{id}", method = RequestMethod.PUT)
-    public Actor update(@PathVariable("id") long id, @RequestBody Actor actor) {
+    public Actor update(@PathVariable("id") long id, @RequestBody Actor actor) throws NotFoundException {
         Actor update = actorRepository.findOne(id);
-        update.setFirstName(actor.getFirstName());
-        update.setLastName(actor.getLastName());
+        if (update != null){
+            update.setFirstName(actor.getFirstName());
+            update.setLastName(actor.getLastName());
+            return actorRepository.save(update);
+        }
+        throw new NotFoundException();
 
-        return actorRepository.save(update);
     }
 
     @RequestMapping(value = "/actors/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") long id) {
-        /*
+    public void delete(@PathVariable("id") long id) throws NotFoundException {
         Actor actor = actorRepository.findOne(id);
-        Set<Movie> movies = actor.getMovies();
-        for (Movie movie : movies)
-        {
-            Set<Actor> actors = movie.getActors();
-            actors.remove(actor);
-            movie.setActors(actors);
-            movieRepository.save(movie);
+        if (actor != null){
+            /*
+            Set<Movie> movies = actor.getMovies();
+
+            movies.clear();
+            //System.out.println(movies);
+            for (Movie movie : movies){
+                System.out.println(movie.getId());
+            }
+            */
+
+            //actorRepository.save(actor);
+            actorRepository.delete(id);
+            return;
         }
-        movies.clear();
-        actor.setMovies(movies);
-        actorRepository.save(actor);
-        */
-        actorRepository.delete(id);
+        throw new NotFoundException();
+
     }
 
 }

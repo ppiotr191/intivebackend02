@@ -22,10 +22,17 @@ public class Actor {
     private String lastName;
 
 
-    @ManyToMany(cascade =CascadeType.ALL)
+    @ManyToMany(mappedBy = "actors")
     @JsonBackReference
     private Set<Movie> movies;
 
+    @PreRemove
+    private void removeActorsFromMovies() {
+
+        for ( Movie m : movies) {
+            m.getActors().remove(this);
+        }
+    }
 
     protected Actor() {}
     public Actor(String firstName, String lastName) {

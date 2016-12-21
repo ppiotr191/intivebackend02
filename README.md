@@ -50,7 +50,7 @@ Rest api usage :
 ```
 	curl -X PUT -H "Content-Type:application/json" -d '{ "name": "Zootopia", "type": "Anime" }' http://localhost:8080/movies/1
 ```
-5) Delete Actor
+5) Delete Movie
 ```
 	curl -X DELETE http://localhost:8080/movies/1
 ```
