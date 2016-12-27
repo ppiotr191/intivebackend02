@@ -1,6 +1,7 @@
 package com.ppiotr191.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,13 +16,15 @@ public class Movie {
     @ManyToMany
     private Set<Actor> actors;
 
-    protected Movie(){}
+    public Movie(){
+        this.setActors(new HashSet<Actor>());
+    }
 
     public Movie(String name, String type) {
 
         this.name = name;
         this.type = type;
-        //this.actors = actors;
+        this.setActors(new HashSet<Actor>());
     }
 
     public String getName() {

@@ -37,7 +37,7 @@ public class MovieController{
     @RequestMapping(value = "/movies", method = RequestMethod.POST)
     public Movie create(@RequestBody Movie movie) {
 
-        movie.setActors(new HashSet<Actor>());
+
         return movieRepository.save(movie);
 
     }
