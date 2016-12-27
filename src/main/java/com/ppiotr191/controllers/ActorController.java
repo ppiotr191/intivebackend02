@@ -29,10 +29,11 @@ public class ActorController{
     @RequestMapping(value = "/actors/{id}", method = RequestMethod.GET)
     public Actor get(@PathVariable("id") long id) throws NotFoundException {
         Actor actor = actorRepository.findOne(id);
-        if (actor != null){
-            return actorRepository.findOne(id);
+        if (actor == null){
+            throw new NotFoundException("Actor");
         }
-        throw new NotFoundException();
+        return actorRepository.findOne(id);
+
     }
     @RequestMapping(value = "/actors", method = RequestMethod.POST)
     public Actor create(@RequestBody Actor actor) {
@@ -42,35 +43,22 @@ public class ActorController{
     @RequestMapping(value = "/actors/{id}", method = RequestMethod.PUT)
     public Actor update(@PathVariable("id") long id, @RequestBody Actor actor) throws NotFoundException {
         Actor update = actorRepository.findOne(id);
-        if (update != null){
-            update.setFirstName(actor.getFirstName());
-            update.setLastName(actor.getLastName());
-            return actorRepository.save(update);
+        if (update == null){
+            throw new NotFoundException("Actor");
         }
-        throw new NotFoundException();
-
+        update.setFirstName(actor.getFirstName());
+        update.setLastName(actor.getLastName());
+        return actorRepository.save(update);
     }
 
     @RequestMapping(value = "/actors/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") long id) throws NotFoundException {
         Actor actor = actorRepository.findOne(id);
-        if (actor != null){
-            /*
-            Set<Movie> movies = actor.getMovies();
-
-            movies.clear();
-            //System.out.println(movies);
-            for (Movie movie : movies){
-                System.out.println(movie.getId());
-            }
-            */
-
-            //actorRepository.save(actor);
-            actorRepository.delete(id);
-            return;
+        if (actor == null){
+            throw new NotFoundException("Actor");
         }
-        throw new NotFoundException();
 
+        actorRepository.delete(id);
     }
 
 }

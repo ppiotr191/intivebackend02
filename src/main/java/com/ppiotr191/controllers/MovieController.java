@@ -29,10 +29,10 @@ public class MovieController{
     @RequestMapping(value = "/movies/{id}", method = RequestMethod.GET)
     public Movie get(@PathVariable("id") long id) throws NotFoundException {
         Movie movie = movieRepository.findOne(id);
-        if (movie != null){
-            return movieRepository.findOne(id);
+        if (movie == null){
+            throw new NotFoundException("Movie");
         }
-        throw new NotFoundException();
+        return movieRepository.findOne(id);
     }
     @RequestMapping(value = "/movies", method = RequestMethod.POST)
     public Movie create(@RequestBody Movie movie) {
@@ -45,24 +45,24 @@ public class MovieController{
     @RequestMapping(value = "/movies/{id}", method = RequestMethod.PUT)
     public Movie update(@PathVariable("id") long id, @RequestBody Movie movie) throws NotFoundException {
         Movie update = movieRepository.findOne(id);
-        if (update != null){
-            update.setName(movie.getName());
-            update.setType(movie.getType());
-
-            return movieRepository.save(update);
+        if (update == null) {
+            throw new NotFoundException("Movie");
         }
-        throw new NotFoundException();
+        update.setName(movie.getName());
+        update.setType(movie.getType());
+
+        return movieRepository.save(update);
 
     }
 
     @RequestMapping(value = "/movies/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") long id) throws NotFoundException {
         Movie movie = movieRepository.findOne(id);
-            if (movie != null){
-            movieRepository.delete(id);
-            return;
+
+        if (movie == null){
+            throw new NotFoundException("Movie");
         }
-        throw new NotFoundException();
+        movieRepository.delete(id);
     }
 
 
@@ -72,14 +72,20 @@ public class MovieController{
         Actor actor = actorRepository.findOne(idActor);
         Movie movie = movieRepository.findOne(id);
 
-        if (actor != null && movie != null){
-            Set<Actor> actors = movie.getActors();
-            actors.add(actor);
-            movie.setActors(actors);
-            movieRepository.save(movie);
-
-            return actor;
+        if (actor == null){
+            throw new NotFoundException("Actor");
         }
-        throw new NotFoundException();
+        if (movie == null) {
+            throw new NotFoundException("Movie");
+        }
+
+        Set<Actor> actors = movie.getActors();
+        actors.add(actor);
+        movie.setActors(actors);
+        movieRepository.save(movie);
+
+        return actor;
+
+
     }
 }
