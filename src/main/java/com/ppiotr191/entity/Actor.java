@@ -1,15 +1,7 @@
 package com.ppiotr191.entity;
 
-/**
- * Created by pablo27 on 14.12.16.
- */
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity

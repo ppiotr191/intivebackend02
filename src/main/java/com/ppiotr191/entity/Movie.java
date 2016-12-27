@@ -1,13 +1,8 @@
 package com.ppiotr191.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.Set;
 
-/**
- * Created by pablo27 on 14.12.16.
- */
 @Entity
 public class Movie {
 
