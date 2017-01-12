@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.ppiotr191</groupId>
-	<artifactId>intivebackend01</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>intivebackend02</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>intivebackend01</name>
+	<name>intivebackend02</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>

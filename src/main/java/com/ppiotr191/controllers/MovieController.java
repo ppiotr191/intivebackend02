@@ -3,7 +3,10 @@ package com.ppiotr191.controllers;
 
 import com.ppiotr191.entity.Actor;
 import com.ppiotr191.entity.Movie;
+import com.ppiotr191.entity.MovieCategory;
 import com.ppiotr191.exceptions.NotFoundException;
+import com.ppiotr191.repository.MovieCategoryRepository;
+import com.ppiotr191.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +18,10 @@ import java.util.Set;
 public class MovieController{
 
     @Autowired
-    private CrudRepository<Movie,Long> movieRepository;
+    private MovieRepository movieRepository;
+
+    @Autowired
+    private MovieCategoryRepository movieCategoryRepository;
 
     @Autowired
     private CrudRepository<Actor,Long> actorRepository;
@@ -26,6 +32,20 @@ public class MovieController{
         return movieRepository.findAll();
     }
 
+    @RequestMapping(value = "/movies/category/{id}", method = RequestMethod.GET)
+    public Iterable<Movie> allByCategory(@PathVariable("id") long id)
+    {
+        MovieCategory movieCategory = movieCategoryRepository.findOne(id);
+        if (movieCategory == null){
+            throw new NotFoundException("Movie Category");
+        }
+        return movieRepository.findAllByCategory(movieCategory);
+    }
+    @RequestMapping(value = "/movies/available", method = RequestMethod.GET)
+    public Iterable<Movie> allByCategory()
+    {
+        return movieRepository.findByAmountGreaterThan(0);
+    }
     @RequestMapping(value = "/movies/{id}", method = RequestMethod.GET)
     public Movie get(@PathVariable("id") long id) throws NotFoundException {
         Movie movie = movieRepository.findOne(id);
@@ -34,10 +54,14 @@ public class MovieController{
         }
         return movieRepository.findOne(id);
     }
-    @RequestMapping(value = "/movies", method = RequestMethod.POST)
-    public Movie create(@RequestBody Movie movie) {
+    @RequestMapping(value = "/movies/category/{id}", method = RequestMethod.POST)
+    public Movie create(@PathVariable("id") int id_category, @RequestBody Movie movie) {
 
-
+        MovieCategory category = movieCategoryRepository.findOne((long)id_category);
+        if (category == null){
+            throw new NotFoundException("Movie Category");
+        }
+        movie.setCategory(category);
         return movieRepository.save(movie);
 
     }
