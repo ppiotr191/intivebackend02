@@ -19,9 +19,6 @@ public class Rabate implements Promotion{
 
     @Override
     public void promote(List<MovieWithPrice> movies) {
-
-        MovieWithPrice lastMovie = null;
-
         int amountOfNewest = this.amountOfNewest(movies);
 
         if (amountOfNewest < 2){

@@ -173,7 +173,7 @@ public class UserServiceImpTests {
         Set<CartElement> cartElements = userService.addToCart(user.getId(), idsMovies);
 
         BigDecimal payout =  userService.finalizeOrder(user.getId());
-        assertThat(payout).isEqualTo(new BigDecimal(26.88).setScale(2, BigDecimal.ROUND_HALF_UP));
+        assertThat(payout).isEqualTo(new BigDecimal(25.60).setScale(2, BigDecimal.ROUND_HALF_UP));
     }
     @Test
     public void testFreeMovie(){
