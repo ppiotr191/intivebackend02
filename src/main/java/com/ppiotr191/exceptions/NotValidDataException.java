@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 
-@ResponseStatus(value= HttpStatus.OK) //404
+@ResponseStatus(value= HttpStatus.BAD_REQUEST) //404
 public class NotValidDataException extends RuntimeException {
     private static final long serialVersionUID = -3332292346834265372L;
 

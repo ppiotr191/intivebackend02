@@ -63,7 +63,7 @@ curl http://localhost:8080/users/1/movies_in_cart
 ```
 8)  Finalize order (return price in response)
 ```
-curl http://localhost:8080/users/1/finalize_order
+curl -i -X POST -H "Content-Type:application/json"  http://localhost:8080/users/1/finalize_order
 ```
 9) Return movies (first numbers is movie id, second - amount of movies)
 ```

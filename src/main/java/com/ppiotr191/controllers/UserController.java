@@ -76,12 +76,8 @@ public class UserController {
     public void removeFromCart(@PathVariable("id") long id, @RequestBody HashMap<Long,Integer> idsMovies) {
         userService.removeFromCart(id, idsMovies);
     }
-    @RequestMapping(value = "/users/{id}/finalize_order", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{id}/finalize_order", method = RequestMethod.POST)
     public BigDecimal finalizeOrder(@PathVariable("id") long id) {
-
-
-
-
         return userService.finalizeOrder(id);
     }
 

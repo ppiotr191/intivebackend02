@@ -93,7 +93,9 @@ public class UserServiceImp implements UserService {
                 if (cartElement.getAmount() < 1){
                     cartElementRepository.delete(cartElement);
                 }
-
+            }
+            else {
+                throw new NotValidDataException("Movie in cart not exists");
             }
 
 
@@ -201,6 +203,9 @@ public class UserServiceImp implements UserService {
                     hiredMovieRepository.save(hiredMovie);
                 }
 
+            }
+            else {
+                throw new NotValidDataException("User doesn't have this movie");
             }
         }
     }
