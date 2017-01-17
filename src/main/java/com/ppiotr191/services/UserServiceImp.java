@@ -82,23 +82,25 @@ public class UserServiceImp implements UserService {
                 throw new NotValidDataException("Amount of movie must be greater than zero");
             }
             Movie movie = movieRepository.findOne(entry.getKey());
-
             if (movie == null){
                 throw new NotFoundException("Movie");
             }
             CartElement cartElement = cartElementRepository.findByUserAndMovie(user,movie);
-
-            if (cartElement != null){
-                cartElement.setAmount(cartElement.getAmount() - entry.getValue());
-                if (cartElement.getAmount() < 1){
-                    cartElementRepository.delete(cartElement);
-                }
-            }
-            else {
+            if (cartElement == null){
                 throw new NotValidDataException("Movie in cart not exists");
             }
+            if (cartElement.getAmount() - entry.getValue() < 0){
+                throw new NotValidDataException("Amount of movie in cart must be greater than amount of removed movies");
+            }
+        }
 
-
+        for (Map.Entry<Long, Integer> entry : idsMovies.entrySet()){
+            Movie movie = movieRepository.findOne(entry.getKey());
+            CartElement cartElement = cartElementRepository.findByUserAndMovie(user,movie);
+            cartElement.setAmount(cartElement.getAmount() - entry.getValue());
+            if (cartElement.getAmount() < 1) {
+                cartElementRepository.delete(cartElement);
+            }
         }
 
     }
