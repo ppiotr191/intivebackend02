@@ -119,6 +119,14 @@ public class UserServiceImp implements UserService {
             throw new NotValidDataException("Maximum amount of movies is " + amountOfMaximumMovies);
         }
         Iterable<CartElement> cartElements = cartElementRepository.findAllByUser(user);
+        for (CartElement cartElement : cartElements){
+
+            Movie movie = cartElement.getMovie();
+            int movieAmount = movie.getAmount() - cartElement.getAmount();
+            if (movieAmount < 0) {
+                throw new NotValidDataException("Amount of movie " + movie.getName() + " is lower than zero (amount:" + movie.getAmount() + ", try to order : " + cartElement.getAmount() + ")");
+            }
+        }
 
         List<MovieWithPrice> moviesWithPrice = new ArrayList<MovieWithPrice>();
         for (CartElement cartElement : cartElements){
@@ -127,9 +135,6 @@ public class UserServiceImp implements UserService {
             }
             Movie movie = cartElement.getMovie();
             int movieAmount = movie.getAmount() - cartElement.getAmount();
-            if (movieAmount < 0){
-                throw new NotValidDataException("Amount of movie " + movie.getName() + " is lower than zero (amount:"+movie.getAmount()+", try to order : "+cartElement.getAmount()+")");
-            }
             movie.setAmount(movie.getAmount() - cartElement.getAmount());
 
             HiredMovie hiredMovie = hiredMovieRepository.findByUserAndMovie(user, movie);
