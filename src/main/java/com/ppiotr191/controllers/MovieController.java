@@ -8,6 +8,7 @@ import com.ppiotr191.exceptions.NotFoundException;
 import com.ppiotr191.repository.MovieCategoryRepository;
 import com.ppiotr191.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,9 +28,9 @@ public class MovieController{
     private CrudRepository<Actor,Long> actorRepository;
 
     @RequestMapping(value = "/movies", method = RequestMethod.GET)
-    public Iterable<Movie> index()
+    public Iterable<Movie> index(Pageable pageable)
     {
-        return movieRepository.findAll();
+        return movieRepository.findAll(pageable);
     }
 
     @RequestMapping(value = "/movies/category/{id}", method = RequestMethod.GET)

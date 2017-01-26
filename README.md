@@ -76,32 +76,36 @@ curl -i -X POST -H "Content-Type:application/json" -d '{ "1" : "1",  "2": "3", "
 ```
 	curl http://localhost:8080/movies
 ```
-2) Get All movies with specific category (id : 1 - newest, id : 2 - hits, id : 3 - others ) :
+2) Get All movies with pagination - "page" param is page number, "size" param is amount of record on each page
+```
+	curl "http://localhost:8080/movies?page=1&size=3"
+```
+3) Get All movies with specific category (id : 1 - newest, id : 2 - hits, id : 3 - others ) :
 ```
 	curl http://localhost:8080/movies/category/1
 ```
-3) Get All available movies :
+4) Get All available movies :
 ```
 	curl http://localhost:8080/movies/available
 ```
 
-4) Get movie :
+5) Get movie :
 ``` 
 	curl http://localhost:8080/movies/1
 ```
-5) Add movie with specific category (Path variable : id : 1 - newest, id : 2 - hits, id : 3 - others ):
+6) Add movie with specific category (Path variable : id : 1 - newest, id : 2 - hits, id : 3 - others ):
 ```
 	curl -i -X POST -H "Content-Type:application/json" -d '{  "name" : "Zootopia",  "type" : "Animated movie", "price" : 20.00, "amount" : 10 }' http://localhost:8080/movies/category/1
 ```
-6) Edit Movie
+7) Edit Movie
 ```
 	curl -X PUT -H "Content-Type:application/json" -d '{ "name": "Zootopia", "type": "Anime", "price" : 10.00, "amount" : 20 }' http://localhost:8080/movies/1
 ```
-7) Delete Movie
+8) Delete Movie
 ```
 	curl -X DELETE http://localhost:8080/movies/1
 ```
-8) Assign actor to movie
+9) Assign actor to movie
 ```
 	curl -X POST http://localhost:8080/movies/1/add_actor/1
 ```	
