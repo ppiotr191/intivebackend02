@@ -96,6 +96,9 @@ curl -i -X POST -H "Content-Type:application/json" -d '{ "1" : "1",  "2": "3", "
 6) Add movie with specific category (Path variable : id : 1 - newest, id : 2 - hits, id : 3 - others ):
 ```
 	curl -i -X POST -H "Content-Type:application/json" -d '{  "name" : "Zootopia",  "type" : "Animated movie", "price" : 20.00, "amount" : 10 }' http://localhost:8080/movies/category/1
+	XML response :
+	curl -i -H "Accept: text/xml" "http://localhost:8080/movies?page=1&size=3"
+
 ```
 7) Edit Movie
 ```
