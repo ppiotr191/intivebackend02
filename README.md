@@ -7,6 +7,11 @@ Running application :
 ./mvnw spring-boot:run
 ```
 
+Documentation :
+```
+http://localhost:8080/swagger-ui.html
+```
+
 Rest api usage :
 
 # Actors
